@@ -20,6 +20,6 @@ while stop != "Y":
     while char_stat not in heroes[char_name]:
         char_stat = input("What statistic do you want to know about? (real name, powers, archenemy)").lower()
     print(f"{char_name.title()}'s {char_stat} is: {heroes[char_name][char_stat]}")
-    stop = input("wanna stop?(Y/N)").upper()
+    stop = input("Wanna stop?(Y/N)").upper()
     if stop=="N":
         char_name = char_stat = ""
