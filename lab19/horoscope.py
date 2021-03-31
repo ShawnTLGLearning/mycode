@@ -14,6 +14,7 @@ def clearScreen():
     print("########################")
     print("#### Horoscope Quest####")
     print("########################")
+
 def getDay():
     """Prompts to get user Birthday"""
     day = 0
@@ -173,6 +174,7 @@ def levelUp(player):
     player["defense"]+=5
     player["magic"]+=5
     player["hp"]+=25
+    return player
 
 def nextRound(ai):
     ai["attack"]+=25
@@ -199,6 +201,7 @@ def battle(player):
         clearScreen()
     print(f"You lasted {roundCount} rounds")
     print(player['horoscope'])
+
 def main():
     """ Run-time code"""
     clearScreen()
@@ -213,4 +216,6 @@ def main():
     player = chooseClass(player)
     battle(player)
     print(f"Good Job {player['name']} You got {player['points']} points!")
-main()
+
+if __name__ == "__main__":
+    main()
