@@ -4,10 +4,6 @@ import requests
 from os import system
 
 
-#response = requests.get("http://horoscope-api.herokuapp.com/horoscope/today/libra")
-#response1 = requests.get("http://horoscope-api.herokuapp.com/horoscope/today/cancer")
-#response2 = requests.get("http://horoscope-api.herokuapp.com/horoscope/today/scorpio")
-#print(response.json(),response1.json(),response2.json())
 def clearScreen():
     """Clears the terminal"""
     print("\033[H\033[J")
