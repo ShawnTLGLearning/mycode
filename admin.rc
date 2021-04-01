@@ -1,0 +1,7 @@
+export OS_AUTH_URL=hjggjhk
+export OS_IDENTITY_API_VERSION=3
+export OS_PROJECT_NAME=fgds
+export OS_PROJECT_DOMAIN_NAME=gdsf
+export OS_USERNAME=dfsg
+export OS_USER_DOMAIN_NAME=sdfg
+export OS_PASSWORD=fgsd

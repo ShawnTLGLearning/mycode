@@ -1,26 +1,15 @@
 #!/usr/bin/env python3
 def main():
-    num1 = promptNumber1()
-    num2 = promptNumber2()
+    num1 = promptNumber("Input the First Number?")
+    num2 = promptNumber("Input the Second Number?")
     print(promptOperation(num1,num2))
     
-def promptNumber1():
+def promptNumber(string):
     while True:
         try:
-            num=input("First Number?")
-            num=float(num)
+            num=float(input(string))
         except:
-            print("not a number")
-        else:
-            return num
-
-def promptNumber2():
-    while True:
-        try:
-            num=input("Second Number?")
-            num=float(num)
-        except:
-            print("not a number")
+            print(num,"is not a valid number. Try Again!")
         else:
             return num
 
@@ -39,8 +28,11 @@ def promptOperation(num1,num2):
         op=input("(A)dd, (S)ubtract, (D)ivide, (M)ultiply?").upper()
         if op in operations:
             if (op == "DIVIDE" or op=="D") and num2 == 0:
-                return "DONT DESYTOY THE UNIVERSE!!\nNo Dividing By ZERO!!"
+                return "DONT DESTROY THE UNIVERSE!!\nNo Dividing By ZERO!!"
+            print()
             return operations[op](num1,num2)
-def updateTerminal():
-    print("updateTerminal")
+        print(op,"not a valid operation. Try Add or Subtract")
+def updateTerminal(num1='',num2='',op=''):
+
+    
 main()
