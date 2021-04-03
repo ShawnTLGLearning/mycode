@@ -2,14 +2,15 @@
 """SC Research || Author: ShawnCharles@protonmail.com"""
 import requests
 from os import system
+import crayons
 
 
 def clearScreen():
     """Clears the terminal"""
     print("\033[H\033[J")
-    print("########################")
-    print("#### Horoscope Quest####")
-    print("########################")
+    print("#########################")
+    print("####",crayons.red("Horoscope Quest"),"####")
+    print("#########################")
 
 def getDay():
     """Prompts to get user Birthday"""
@@ -39,32 +40,6 @@ def getSign(day):
            "october" :{"changeDay":23,"signs":["libra","scorpio"]},
            "november" :{"changeDay":22,"signs":["scorpio","sagittarius"]}
            }
-    # """elif sign implementation"""
-    #if month == 'december':
-    #       sign = 'sagittarius' if (day < 22) else 'capricorn'
-    #elif month == 'january':
-    #       sign = 'capricorn' if (day < 20) else 'aquarius'
-    #elif month == 'february':
-    #       sign = 'aquarius' if (day < 19) else 'pisces'
-    #elif month == 'march':
-    #       sign = 'pisces' if (day < 21) else 'aries'
-    #elif month == 'april':
-    #elif month == 'april':
-    #       sign = 'aries' if (day < 20) else 'taurus'
-    #elif month == 'may':
-    #       sign = 'taurus' if (day < 21) else 'gemini'
-    #elif month == 'june':
-    #       sign = 'gemini' if (day < 21) else 'cancer'
-    #elif month == 'july':
-    #       sign = 'cancer' if (day < 23) else 'leo'
-    #elif month == 'august':
-    #       sign = 'leo' if (day < 23) else 'virgo'
-    #elif month == 'september':
-    #       sign = 'virgo' if (day < 23) else 'libra'
-    #elif month == 'october':
-    #       sign = 'libra' if (day < 23) else 'scorpio'
-    #elif month == 'november':
-    #       sign = 'scorpio' if (day < 22) else 'sagittarius'
     inputMonth=""
     while inputMonth not in months:
         inputMonth = input("Input your month of birth (e.g. March, July etc): \n").lower()
@@ -103,20 +78,20 @@ def willCheck(player):
             player['defense']-=5
             player["perks"]+=['Will Of Fire']
             clearScreen()
-            print(f"{player['name']} Obtained skill 'Will Of Fire'!")
+            print(f"{player['name']} Obtained skill {crayons.red('Will Of Fire')}!")
             break
         if response == "N":
              player['attack']-=5
              player['defense']+=5
              player["perks"]+=['Cautius Mind']
              clearScreen()
-             print(f"{player['name']} obtained skill 'Cautius Mind'!")
+             print(f"{player['name']} obtained skill {crayons.blue('Cautius Mind')}!")
              break
     return player
 
 def enduranceCheck(player):
     """updates attack & defense based on input"""
-    print(f"Puny Adventurer {player['name']}, as a {player['sign'].title()} the universe must know your oppinion ?"
+    print(f"Puny Adventurer {crayons.blue(player['name'])}, as a {player['sign'].title()} the universe must know your oppinion ?"
     )
     while True:
         response = input("(M)arathon or (S)print?\n").upper()
@@ -126,13 +101,13 @@ def enduranceCheck(player):
             player['hp']+=25
             player["perks"]+=['Slow&Steady']
             clearScreen()
-            print(f"{player['name']} obtained skill '{player['perks'][-1:][0]}'!")
+            print(f"{player['name']} obtained skill '{crayons.blue(player['perks'][-1:][0])}'!")
             break
         if (response == "S" or response=="SPRINT"):
              player['attack']+=10
              player["perks"]+=['Quick as Flash']
              clearScreen()
-             print(f"{player['name']} obtained skill '{player['perks'][-1:][0]}'!")
+             print(f"{player['name']} obtained skill '{crayons.red(player['perks'][-1:][0])}'!")
              break
     return player
 
@@ -148,13 +123,13 @@ def heartCheck(player):
             player['hp']+=25
             player["perks"]+=['StrongFinish']
             clearScreen()
-            print(f"{player['name']} obtained skill '{player['perks'][-1:][0]}'!")
+            print(f"{player['name']} obtained skill '{crayons.red(player['perks'][-1:][0])}'!")
             break
         if (response == "E" or response=="EARLY BIRD"):
              player['attack']+=10
              player["perks"]+=['FirstAttack']
              clearScreen()
-             print(f"{player['name']} obtained skill '{player['perks'][-1:][0]}'!")
+             print(f"{player['name']} obtained skill '{crayons.red(player['perks'][-1:][0])}'!")
              break
     return player
 
@@ -180,19 +155,53 @@ def nextRound(ai):
     return ai
 
 def battle(player):
-    roundCount=0
+    actions = ["A","B","M","H"]
+    roundCount=1
     randomOpponent = playerBuilder("Darth Vader")
     randomOpponent = nextRound(randomOpponent)
+    print(f"Battle with {randomOpponent['name']} has begun")
     while player["hp"]>0:
-        print(f"{player['name']} hp: {player['hp']}")
-        print(f"{randomOpponent['name']} hp: {randomOpponent['hp']}")
-        action = input("Attack? \n Y/N?")
-        randomOpponent["hp"]-=player["attack"]
-        player['points']+=player['attack']
+        print(f"Score: {player['points']}")
+        print()
+        print('{0:<}              {1:>}'.format(player['name'],randomOpponent['name']))
+        print('{0:<}              {1:>}'.format(f"hp: {player['hp']}",randomOpponent['hp']))
+        print('{0:<}            {1:>}'.format(f"attack: {player['attack']}",randomOpponent['attack']))
+        print('{0:<}           {1:>}'.format(f"defense: {player['defense']}",randomOpponent['defense']))
+        print('{0:<}             {1:>}'.format(f"magic: {player['magic']}",randomOpponent['magic']))
+        action = ''
+        while len(action)<1 or action not in actions:
+            action = input("(A)ttack, (M)agic Attack, (H)eal, (B)lock?\n").upper()
+            if action not in actions:
+                print("enter valid action!")
+        if action =="A":
+            randomOpponent["hp"]-=player["attack"]
+            player['points']+=player['attack']
+            print(f"You dealt {player['attack']} points of damage to {randomOpponent['name']}")
+        if action =="M":
+            randomOpponent["hp"]-=player["magic"]
+            player['points']+=player['magic']
+            print(f"You dealt {player['magic']} points of magic damage to {randomOpponent['name']}")
+        if action =="B":
+            print(f"You unlocked the super secret Chad Mode")
+            player["hp"]=9999999
+            player["name"]="CHAD"
+            player["attack"]=9999999
+            player["defense"]=9999999
+            player["magic"]=9999999
+            player["points"]=9999999
+            print(f"You Force Choke Vader and save the universe!!")
+            break
+        if action =="H":
+            player["hp"]+=player["magic"]
+            print(f"You healed {player['magic']} hp points")
         if randomOpponent["hp"]>0:
             player["hp"]-=randomOpponent["attack"]
+            print(f"{randomOpponent['name']} used the force and dealt {randomOpponent['attack']} points of damage to {player['name']}")
         else:
+            print("you defeated an enemy")
+            print("but he came back stronger!")
             randomOpponent = nextRound(randomOpponent)
+        input(f"Round {roundCount}. Press Enter")
         roundCount+=1
         clearScreen()
     print(f"You lasted {roundCount} rounds")
