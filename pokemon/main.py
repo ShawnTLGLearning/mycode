@@ -5,7 +5,8 @@ import random
 from assets.chadtricks import clear, print1by1
 from assets.rooms import rooms
 from assets.descriptions import descriptions
-
+#to start and stop music if we werent in virtual environment
+#import pygame.mixer
 
 class Pokemon:
     def __init__(self,pokemonId,lvl):
@@ -25,14 +26,22 @@ class Pokemon:
             self.move3 = stats[9].split("-")[pokemonId]
             self.move4 = stats[10].split("-")[pokemonId]
             self.growth = 1+(lvl/25)
-            
+
+##Evolutions - nested Classes - Bulbasaur is-a Ivysaur, Ivysaur is-a Venusaur
+##dont have time to do
+class Player:
+    def __init__(self,inventory,badges,skills,pokemon):
+        self.inventory=inventory
+        self.badges = badges
+        self.skills = skills
+        self.pokemon = pokemon
 
 
 def showInstructions():
     ##write good instructions
 
   #print a main menu and the commands
-  print('''
+    print('''
 Pokemon
 ========
 Commands:
@@ -44,11 +53,19 @@ Commands:
 ''')
 
 def main():
+    validCommands = ["get","go","use", "fly","cut","climb", "surf", "hidden power", "flash","dig"]
+    
+    player = {
+            "inventory": [],
+            "skills":["fly","dig","surf","cut","strength","hidden power","flash"],
+            "pokemon":[]
+            }
     inventory = []
     skills = ["fly","dig","surf","cut","strength","hidden power","flash"]
     currentRoom = "Pallet Town"
     badges = []
     move= ""
+    emoticons = [crayons.red("Θ"),f"(╯°□°)╯︵{crayons.red('◓')}",f"{crayons.yellow('ϞϞ')}({crayons.red('๑')}⚈ ․ ⚈{crayons.red('๑')})∩","><(((o.^.o)","ଘ @(￣▵—▵￣)v(￣▵▵￣)@ ଓ",">(8☉)@@@oo<>","(>￣ー￣)"]
     def showStatus():
   #print the player's current status
         print('---------------------------')
@@ -60,9 +77,19 @@ def main():
         if len(rooms[currentRoom]['items']) != 0:
             for item in rooms[currentRoom]['items']:
                 print(f'You see a {item}. {descriptions[item]}')
-
+        print()
+        print(Pokemon(22,22).growth)
     clear()
     showInstructions()
+
+    #plays music but server doesnt have speakers
+    #pygame.mixer.init()
+    #pygame.mixer.music.load("assets/music/battle.mp3")
+    #pygame.mixer.music.play()
+    #while pygame.mixer.music.get_busy() == True:
+    #    continue
+
+
     while True and move!="q":
 
         ##conditional to create user file 
@@ -78,8 +105,7 @@ def main():
         showStatus()
         move= ""
         while move == '':
-            move=input(f"︵{crayons.red('◓')}>>")
-        emoticons = [crayons.red("Θ"),f"(╯°□°)╯︵{crayons.red('◓')}",f"{crayons.yellow('ϞϞ')}({crayons.red('๑')}⚈ ․̫ ⚈{crayons.red('๑')})∩","><(((o.^.o)","ଘ @(￣▵—▵￣)v(￣▵▵￣)@ ଓ",">(8☉)@@@oo<>","(￣ー￣)"]
+            move=input(f"︵{crayons.red('◓')}>> ")
         move = move.lower().split(" ", 1)
 
         #if they type 'go' first
@@ -114,6 +140,11 @@ def main():
             else:
       #tell them they can't get it  
                 print('Can\'t get ' + move[1] + '!')
+
+        if move[0] == 'help' :
+            clear()
+            showInstructions()
+
 
 if __name__=="__main__":
     main()
