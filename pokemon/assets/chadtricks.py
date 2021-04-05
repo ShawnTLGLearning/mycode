@@ -14,7 +14,7 @@ def print1by1(text, delay=0.1):
     print
 
     ##Upgraded chad trick for animation
-def video(arrayOfText,delay=0.1):
+def video(arrayOfText,delay=0.5):
     for c in arrayOfText:
         clear()
         sys.stdout.write(c)
