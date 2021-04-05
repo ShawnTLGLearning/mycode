@@ -24,10 +24,10 @@ class Pokemon:
             self.speed = stats[4].split("-")[pokemonId]
             self.spAttack = stats[6].split("-")[pokemonId]
             self.spDefense = stats[5].split("-")[pokemonId]
-            self.move1 = stats[7].split("-")[pokemonId]
-            self.move2 = stats[8].split("-")[pokemonId]
-            self.move3 = stats[9].split("-")[pokemonId]
-            self.move4 = stats[10].split("-")[pokemonId]
+            self.move1 = stats[7].split(".")[pokemonId]
+            self.move2 = stats[8].split(".")[pokemonId]
+            self.move3 = stats[9].split(".")[pokemonId]
+            self.move4 = stats[10].split(".")[pokemonId]
             self.growth = 1+(level/25)
 
 ##Evolutions - nested Classes - Bulbasaur is-a Ivysaur, Ivysaur is-a Venusaur
@@ -101,7 +101,7 @@ def battle(player1, ai):
             print(f"You can (R)un,\n use {player1.pokemon[0].move1}, {player1.pokemon[0].move2}, {player1.pokemon[0].move3}, {player1.pokemon[0].move4},\n or try to (C)atch {ai.pokemon[0].name}")
             action = None
             while validAction(action,player1) == False:
-                action = input(f"{crayons.red('◓')}").upper()
+                action = input(f"<{crayons.red('◓')}>").upper()
             if action=="R" or action=="RUN":
                 return player1
             elif action=="C" or action=="CATCH":
@@ -183,6 +183,20 @@ def gymBattle(player):
     player = battle(player,Trainer("Gym Leader",[Pokemon(56,12),Pokemon(23,34),Pokemon(87,98),Pokemon(41,42)]))
     return player
 
+def articunoBattle(player):
+    """returns player after running Legendary Battle"""
+    player = battle(player,Trainer("Legendary",[Pokemon(144,65)]))
+    return player
+
+def mewTwoBattle(player):
+    """returns player after running Legendary Battle"""
+    player = battle(player,Trainer("Legendary",[Pokemon(150,65)]))
+    return player
+
+def mewBattle(player):
+    """returns player after running Legendary Battle"""
+    player = battle(player,Trainer("Legendary",[Pokemon(151,65)]))
+    return player
 def heal(player):
     for pokemon in player.pokemon:
         pokemon.hp['current']=pokemon.hp['max']
@@ -247,8 +261,7 @@ def main():
     #    continue
 
 
-    while True and move!="q":
-
+    while True and move !="q":
         ##if fail, load found file into game - version2
         ##Battle Sequence and leveling pokemon - accomplished
         ##Route Logic making a pokemon appear conditional before status message- accomplished
@@ -258,6 +271,10 @@ def main():
         ##1Gym - accomplished
         if player.currentRoom[0]=="R":
             player = grass(player)
+        
+        if player.currentRoom=="Mt. Silver" and "Kings Rock" in inventory:
+            player = articunoBattle(player)
+        
         showStatus()
         move= ""
         while move == '':

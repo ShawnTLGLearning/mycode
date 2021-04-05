@@ -1,7 +1,7 @@
 rooms = {
         'Pallet Town' : { 
             'directions' : {"north": "Route 1","south": "Route 21"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'locations': ['pokecenter']
             },
         'Victory Road' : {
@@ -11,36 +11,36 @@ rooms = {
             },
         'Viridian Forest' : {
             'directions' : {"north": "Route 2","south": "Viridian City"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [ "Ho-oh Feather" ],
             'locations': []
             },
         'Mt. Moon' : {
             'directions' : {"west": "Route 3","east": "Route 4"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [ "Iceroot Carrot" ],
             'locations': []
             },
         'Rock Tunnel' : {
             'directions' : {"west": "Route 9","south": "Route 10"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [ "Kings Rock" ],
             'pokemon': {'level': [2,5],
             'ids': [16,19,25]},
             'locations': []
             },
         'Power Plant' : {
             'directions' : {"north": "Route 10","south": "Lavender Town"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [ "Electirizer" ],
             'locations': []
             },
         'Radio Tower' : {
             'directions' : {"outside": "Lavender Town", "exit": "Lavender Town", "leave": "Lavender Town"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'pokemon': {'level': [2,5],
             'ids': [16,19,25]},
             'locations': []
             },
         'Silph Co.' : {
             'directions' : {"outside": "Saffron City", "exit": "Saffron City", "leave": "Saffron City"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'locations': []
             },
         'Seafoam Islands' : {
@@ -55,69 +55,69 @@ rooms = {
             },
         "Diglett's Cave": {
             'directions' : {"south": "Route 11"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  "Dragon Fang"],
             'locations': []
             },
         "Diglet's Cave": {
             'directions' : {"north": "Route 3"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'locations': []
             },
         'Mt. Silver' : {
             'directions' : {"east": "Route 28"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [ "Dragon Scale" ],
             'locations': []
             },
         'Indigo Plateau' : {
             'directions' : {"south": "Victory Road"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'locations': []
             },
         "Bill's House" : {
             'directions' : {"west": "Route 25"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'locations': []
             },
         'Route 1' : {
             'directions' : {"north": "Viridian City", "south": "Pallet Town"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'pokemon': {'level': [2,5],
             'ids': [16,19,25]},
             'locations': []
             },
         'Viridian City' : {
             'directions' : {"north": "Viridian Forest", "south": "Route 1","west": "Route 22"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'locations': ['gym','pokecenter','pokemart']
             },
         'Pewter City' : {
             'directions' : {"east": "Route 3", "south": "Route 2"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'locations': ['gym','pokecenter','pokemart']
             },
         'Cerulean City' : {
             'directions' : {"north": "Route 24", "south": "Route 5", "east": "Route 9", "west": "Route 4"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'locations': ['gym','pokecenter','pokemart']
             },
         'Celadon City' : {
             'directions' : {"west": "Route 16", "east": "Route 7"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'locations': ['gym','pokecenter','pokemart']
             },
         'Saffron City' : {
             'directions' : {"north": "Route 5", "south": "Route 6", "east": "Route 8", "west": "Route 7"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'locations': ['gym','pokecenter','pokemart']
             },
         'Lavender Town' : {
             'directions' : {"north": "Power Plant", "south": "Route 12", "west": "Route 8"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'locations': ['gym','pokecenter','pokemart']
             },
         'Vermillion City' : {
             'directions' : {"north": "Route 6", "east": "Route 11"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'locations': ['gym','pokecenter','pokemart']
             },
         'Fuschia City' : {
@@ -127,7 +127,7 @@ rooms = {
             },
         'Cinnibar Island' : {
             'directions' : {"north": "Route 21", "east": "Route 20"},
-            'items'  : [ "Rainbow Scale" ],
+            'items'  : [  ],
             'locations': ['gym','pokecenter','pokemart']
             },
         'Route 2' : {

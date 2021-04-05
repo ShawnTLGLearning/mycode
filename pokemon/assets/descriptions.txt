@@ -101,7 +101,7 @@ Route 26 : This Route continues east on a bridge over a body of water just befor
 Route 26 : is a route that connects Kanto to Johto. To the east is Route 26.
 Route 27 : Leads to Mt. Silver.
 Rainbow Scale : At the bottom of the lake, you can see a glowing fish
-Ho-oH Feather : In the middle of the clearing is a huge tree. One of your pokemon tell you theres something glowing at the top
+Ho-oh Feather : In the middle of the clearing is a huge tree. One of your pokemon tell you theres something glowing at the top
 Dragon Fang : You almost trip on a surprisingly sharp rock. 
 Dragon Scale : Your pokemon finds what looks like an emerald.
 Electirizer : A lightweight portable battery lays on the table next to a voltorb shrine.
@@ -109,3 +109,4 @@ Helix Fossil : Your pokemon sees a strange sea shell. A fossil of an ancient Pok
 Rock Tunnel : You are forcing your way through a very tight crawl space. You can hear pokemon digging.
 Iceroot Carrot : Produce that the King of Bountiful Harvests’ beloved steed likes to eat. It grows in fields covered in snow, like this one.
 Kings Rock : You see a heavy rock that locks kinda like a rusty crown!
+
