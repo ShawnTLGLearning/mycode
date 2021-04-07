@@ -109,4 +109,10 @@ Helix Fossil : Your pokemon sees a strange sea shell. A fossil of an ancient Pok
 Rock Tunnel : You are forcing your way through a very tight crawl space. You can hear pokemon digging.
 Iceroot Carrot : Produce that the King of Bountiful Harvests’ beloved steed likes to eat. It grows in fields covered in snow, like this one.
 Kings Rock : You see a heavy rock that locks kinda like a rusty crown!
+Tree Stump Of Ending: And as the ax bit into the wood, be comforted in the fact that the ache in your heart and the confusion in your soul means that you are still alive, still human, and still open to the beauty of the world, even though you have done nothing to deserve it.
+Officer Jenny : Always very busy, Officer Jenny flys by you on her motorcyle 
+Iron-Masked Marauder: A man in a mask steals your wallet. You realize it is the Iron-Masked Marauder, an Elite Officer of Team Rocket.
+Pokémon hunter : 
+Old woodsman: Off in the distance you can hear the chopping of wood. Must be an Old woodsman (or woodswoman)
+Band of Diglett thieves : A group dressed up like mole people are up ahead, the don't seem to see you, as they discuse their plans
 

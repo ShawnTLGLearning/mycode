@@ -9,6 +9,8 @@ from assets.descriptions import descriptions
 import json
 #to start and stop music if we werent in virtual environment
 #import pygame.mixer
+from pokemon.master import catch_em_all, get_pokemon
+##ascii art
 
 class Pokemon:
     def __init__(self,pokemonId,level):
@@ -31,7 +33,7 @@ class Pokemon:
             self.growth = 1+(level/25)
 
 ##Evolutions - nested Classes - Bulbasaur is-a Ivysaur, Ivysaur is-a Venusaur
-##dont have time to do
+##dont have ime to do
 
 class Player:
     def __init__(self,room,inventory,badges,skills,pokemon):
@@ -67,6 +69,8 @@ def validAction(action,player):
             "RUN":True,
             "C":True,
             "CATCH":True,
+            "S":True,
+            "SWITCH":True,
             currentPokemon.move1.upper():True,
             currentPokemon.move2.upper():True,
             currentPokemon.move3.upper():True,
@@ -85,24 +89,54 @@ def battle(player1, ai):
     clear()
     defeated = []
     if len(ai.pokemon)<2:
-        #wild encounter
         print(f"A wild {ai.pokemon[0].name} has appeared!")
         while True:
+        #wild encounter
             currentPokemon = player1.pokemon[0]
             wildPokemon = ai.pokemon[0]
-            print('{0:<}              {1:>}'.format(currentPokemon.name,wildPokemon.name))
-            print('{0:<}              {1:>}'.format(f"lvl: {currentPokemon.level}",wildPokemon.level))
-            print('{0:<}              {1:>}'.format(f"hp:  {currentPokemon.hp['current']}",wildPokemon.hp["current"]))
+
             if wildPokemon.hp["current"]<=0:
                 clear()
                 print("You won the battle!")
                 player1.pokemon[0] = Pokemon(currentPokemon.id,currentPokemon.level+1)
                 return player1
-            print(f"You can (R)un,\n use {player1.pokemon[0].move1}, {player1.pokemon[0].move2}, {player1.pokemon[0].move3}, {player1.pokemon[0].move4},\n or try to (C)atch {ai.pokemon[0].name}")
+            elif currentPokemon.hp["current"]<=0:
+                print(player1.pokemon[0].name,"has fainted!")
+                player1.pokemon.sort(key=lambda poke:poke.hp["current"],reverse=True)
+                if player1.pokemon[0].hp["current"]<=0:
+                    ##All pokemon faint
+                    clear()
+                    print("You fainted!")
+                    print("You wake up in Pallet Town!")
+                    player1.currentRoom = "Pallet Town"
+                    return player1
+                else:
+                    choice = ''
+                    while choice not in [pokemon.name for pokemon in player1.pokemon if pokemon.name==choice and pokemon.hp['current']>=0 ]:
+                        choice = input(f"Choose your next pokemon to battle! {[pokemon.name for pokemon in player1.pokemon if pokemon.hp['current']>=0]}\n<{crayons.red('◓')}>").capitalize()
+                    player1.pokemon = [pokemon for pokemon in player1.pokemon if pokemon.name==choice]+[pokemon for pokemon in player1.pokemon if pokemon.name!=choice]
+        
+            print('{0:<}              {1:>}'.format(currentPokemon.name,wildPokemon.name))
+            print('{0:<}              {1:>}'.format(f"lvl: {currentPokemon.level}",wildPokemon.level))
+            print('{0:<}              {1:>}'.format(f"hp:  {currentPokemon.hp['current']}",wildPokemon.hp["current"]))
+            
+            print(f"You can (R)un,\n use {player1.pokemon[0].move1}, {player1.pokemon[0].move2}, {player1.pokemon[0].move3}, {player1.pokemon[0].move4},\n or (S)witch pokemon\n  or try to (C)atch {ai.pokemon[0].name}")
             action = None
             while validAction(action,player1) == False:
                 action = input(f"<{crayons.red('◓')}>").upper()
-            if action=="R" or action=="RUN":
+            if action=="S" or action=="SWITCH":
+                choice = ''
+                while choice not in [pokemon.name for pokemon in player1.pokemon if pokemon.name==choice]:
+                    choice = input(f"Choose your next pokemon to battle! {[pokemon.name for pokemon in player1.pokemon if pokemon.hp['current']>=0]}\n<{crayons.red('◓')}>").capitalize()
+                player1.pokemon = [pokemon for pokemon in player1.pokemon if pokemon.name==choice]+[pokemon for pokemon in player1.pokemon if pokemon.name!=choice]
+                ##Deal Damage
+                currentPokemon.hp["current"]-= int(wildPokemon.attack)*wildPokemon.growth
+                clear()
+                if currentPokemon.hp['current']<=0:
+                    print(f"{currentPokemon.name} has fainted")
+                print(f"{wildPokemon.name} dealt {int(wildPokemon.attack)*wildPokemon.growth} points of damage to {currentPokemon.name}")
+            elif action=="R" or action=="RUN":
+                clear()
                 return player1
             elif action=="C" or action=="CATCH":
                 video(vid)
@@ -113,18 +147,25 @@ def battle(player1, ai):
                     clear()
                     print(vid[0])
                     print(f"{wildPokemon.name} broke free!")
-
-                #will save pokemon if team > 5
+                    print()
+                    ##Deal Damage
+                    currentPokemon.hp["current"]-= int(wildPokemon.attack)*wildPokemon.growth
+                    print(f"{wildPokemon.name} dealt {int(wildPokemon.attack)*wildPokemon.growth} points of damage to {currentPokemon.name}")
             else:
                 ##Attack process
                 wildPokemon.hp["current"]-= int(currentPokemon.attack)*currentPokemon.growth
-
+                currentPokemon.hp["current"]-= int(wildPokemon.attack)*wildPokemon.growth
+                clear()
+                print(f"{currentPokemon.name} dealt {int(currentPokemon.attack)*currentPokemon.growth} points of damage")
+                print(f"{wildPokemon.name} dealt {int(wildPokemon.attack)*wildPokemon.growth} points of damage")
+    
     else:
             #trainer battle
         print(f"{ai.name} wants to battle!")
         while True:
+            currentPokemon = player1.pokemon[0]
+
             if ai.pokemon[0].hp["current"]<=0:
-                clear()
                 print(f"You defeated {ai.pokemon[0].name}!")
                 ai.pokemon.remove(ai.pokemon[0])
                 ##levelup Pokemon
@@ -136,8 +177,11 @@ def battle(player1, ai):
                 #levelup
                 player1.pokemon[0] = Pokemon(currentPokemon.id,currentPokemon.level+1)
                 return player1
+            else:
+                wildPokemon = ai.pokemon[0]
             #currentPokemon fainted
-            if player1.pokemon[0].hp["current"]<=0:
+
+            if currentPokemon.hp["current"]<=0:
                 print(player1.pokemon[0].name,"has fainted!")
                 player1.pokemon.sort(key=lambda poke:poke.hp["current"],reverse=True)
                 if player1.pokemon[0].hp["current"]<=0:
@@ -147,17 +191,37 @@ def battle(player1, ai):
                     print("You wake up in Pallet Town!")
                     player1.currentRoom = "Pallet Town"
                     return player1
-            currentPokemon = player1.pokemon[0]
+                else:
+                    choice = ''
+                    while choice not in [pokemon.name for pokemon in player1.pokemon if pokemon.name==choice and pokemon.hp['current']>=0 ]:
+                        choice = input(f"Choose your next pokemon to battle! {[pokemon.name for pokemon in player1.pokemon if pokemon.hp['current']>=0]}\n<{crayons.red('◓')}>").capitalize()
+                    player1.pokemon = [pokemon for pokemon in player1.pokemon if pokemon.name==choice]+[pokemon for pokemon in player1.pokemon if pokemon.name!=choice]
+
             wildPokemon = ai.pokemon[0]
-            print('{0:<}             {1:>}'.format(currentPokemon.name,wildPokemon.name))
-            print('{0:<}                  {1:>}'.format(f"lvl: {currentPokemon.level}",wildPokemon.level))
-            print('{0:<}              {1:>}'.format(f"hp:  {currentPokemon.hp['current']}",wildPokemon.hp["current"]))
+            currentPokemon = player1.pokemon[0]
+            print('{0:<}             {1:>}'.format(player1.pokemon[0].name,wildPokemon.name))
+            print('{0:<}                  {1:>}'.format(f"lvl: {player1.pokemon[0].level}",wildPokemon.level))
+            print('{0:<}              {1:>}'.format(f"hp:  {player1.pokemon[0].hp['current']}",wildPokemon.hp["current"]))
             action = None
-            print(f"You can (R)un,\n use {player1.pokemon[0].move1}, {player1.pokemon[0].move2}, {player1.pokemon[0].move3}, {player1.pokemon[0].move4}")
+            print(f"You can (R)un,\n use {player1.pokemon[0].move1}, {player1.pokemon[0].move2}, {player1.pokemon[0].move3}, {player1.pokemon[0].move4} \nor (S)witch pokemon")
             while validAction(action,player1) == False:
                 action = input(f"<{crayons.red('◓')}>").upper()
+                if action == "C" or action=="CATCH":
+                    action = ''
             if action=="R" or action=="RUN":
-                return player1
+                clear()
+                print("you can't run away")
+            elif action=="S" or action=="SWITCH":
+                choice = ''
+                while choice not in [pokemon.name for pokemon in player1.pokemon if pokemon.name==choice and pokemon.hp['current']>=0]:
+                    choice = input(f"Choose your next pokemon to battle! {[pokemon.name for pokemon in player1.pokemon if pokemon.hp['current']>=0]}\n<{crayons.red('◓')}>").capitalize()
+                player1.pokemon = [pokemon for pokemon in player1.pokemon if pokemon.name==choice]+[pokemon for pokemon in player1.pokemon if pokemon.name!=choice]
+                ##Deal Damage
+                currentPokemon.hp["current"]-= int(wildPokemon.attack)*wildPokemon.growth
+                clear()
+                if currentPokemon.hp['current']<=0:
+                    print(f"{currentPokemon.name} has fainted")
+                print(f"{wildPokemon.name} dealt {int(wildPokemon.attack)*wildPokemon.growth} points of damage to {currentPokemon.name}")
             else:
                 ##Attack process
                 wildPokemon.hp["current"]-= int(currentPokemon.attack)*currentPokemon.growth
@@ -180,7 +244,35 @@ def grass(player):
 
 def gymBattle(player):
     """returns player after running Gym Battle"""
-    player = battle(player,Trainer("Gym Leader",[Pokemon(56,12),Pokemon(23,34),Pokemon(87,98),Pokemon(41,42)]))
+    gyms = {
+            "Cinnabar Island": Trainer("Blaine",[Pokemon(78,60),Pokemon(38,75),Pokemon(136,59),Pokemon(59,60),Pokemon(6,65),Pokemon(146,75)]),
+            "Cerulean City": Trainer("Misty",[Pokemon(55,56),Pokemon(148,75),Pokemon(134,1),Pokemon(121,60),Pokemon(130,60),Pokemon(9,70)]),
+            "Pewter City": Trainer("Brock",[Pokemon(95,51),Pokemon(111,56),Pokemon(141,51),Pokemon(139,56),Pokemon(142,51),Pokemon(76,51)]),
+            "Saffron City": Trainer("Sabrina",[Pokemon(122,60),Pokemon(124,56),Pokemon(97,51),Pokemon(80,56),Pokemon(103,60),Pokemon(65,70)]),
+            "Vermillion City": Trainer("Lt. Surge",[Pokemon(101,60),Pokemon(135,56),Pokemon(125,51),Pokemon(82,56),Pokemon(127,70),Pokemon(26,65)]),
+            "Celadon City": Trainer("Erika",[Pokemon(114,60),Pokemon(47,56),Pokemon(103,51),Pokemon(71,56),Pokemon(3,70),Pokemon(45,65)]),
+            "Lavender City": Trainer("Gary",[Pokemon(18,60),Pokemon(65,65),Pokemon(112,60),Pokemon(130,64),Pokemon(103,70),Pokemon(59,65)]),
+            "Fuschia City": Trainer("Janine",[Pokemon(49,60),Pokemon(89,56),Pokemon(110,51),Pokemon(42,56),Pokemon(33,70),Pokemon(73,65)]),
+            "Viridian City": Trainer("Giovanni",[Pokemon(111,45),Pokemon(51,42),Pokemon(31,44),Pokemon(34,45),Pokemon(111,50),Pokemon(150,150)]),
+            "Indigo Plateau":[ Trainer("",[Pokemon(1,1)]),Trainer("",[Pokemon(1,1)])],
+            "Atlantis City": Trainer("Aquaman",[Pokemon(9,60),Pokemon(9,60),Pokemon(9,60),Pokemon(9,60),Pokemon(9,60),Pokemon(9,60)]),
+            }
+    
+    player = battle(player,gyms[player.currentRoom])
+    if player.pokemon[0].hp['current']>=0 and player.currentRoom not in player.badges:
+        player.badges += [player.currentRoom]
+        if player.currentRoom == "Pewter City":
+            print('You obtained the skill flash')
+            player.skills+=['flash']
+        if player.currentRoom == "Cerulean City":
+            print('You obtained the skill cut')
+            player.skills+=['cut']
+        if player.currentRoom == "Celadon City":
+            print('You obtained the skill strength')
+            player.skills+=['strength']
+        if player.currentRoom == 'Saffron City':
+            print('You obtained the skill surf')
+            player.skills+=['surf']
     return player
 
 def articunoBattle(player):
@@ -215,15 +307,18 @@ Commands:
   go [direction]
   get [item]
   talk [person]
-  use [skill]
+  [skill]
   q (quit)
 ''')
 
 def main():
     clear()
+    print("██████╗  ██████╗ ██╗  ██╗███████╗███╗   ███╗ ██████╗ ███╗   ██╗\n██╔══██╗██╔═══██╗██║ ██╔╝██╔════╝████╗ ████║██╔═══██╗████╗  ██║\n██████╔╝██║   ██║█████╔╝ █████╗  ██╔████╔██║██║   ██║██╔██╗ ██║\n██╔═══╝ ██║   ██║██╔═██╗ ██╔══╝  ██║╚██╔╝██║██║   ██║██║╚██╗██║\n██║     ╚██████╔╝██║  ██╗███████╗██║ ╚═╝ ██║╚██████╔╝██║ ╚████║\n╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝\n")
     validCommands = ["get","go","use", "fly","cut","climb", "surf", "hidden power", "flash","dig"]
-    player = Player("Pallet Town", [],[],["fly","dig","surf","cut","strength","hidden power","flash"],[Pokemon(25,95),Pokemon(25,150), Pokemon(6,95),Pokemon(25,95)])
+    player = Player("Pallet Town", [],[],["fly","dig","surf","cut","strength","hidden power","flash"],[Pokemon(25,65),Pokemon(8,60), Pokemon(6,65),Pokemon(10,2000)])
     move= ""
+    
+    storage = []
     inventory=[]
     emoticons = [crayons.red("Θ"),f"(╯°□°)╯",f"(╯°□°)╯︵{crayons.red('◓')}",f"{crayons.yellow('ϞϞ')}({crayons.red('๑')}⚈ ․ ⚈{crayons.red('๑')})∩","><(((o.^.o)","ଘ @(￣▵—▵￣)v(￣▵▵￣)@ ଓ",">(8☉)@@@oo<>","(>￣ー￣)"]
     vid = [f"(╯°□°)╯  "+ emoticons[7],f"(╯°□°)╯︵"+emoticons[7],f"(╯°□°)╯︵{crayons.red('◓')}","(╯°□°)╯ ︵{crayons.red('◓')}","(╯°□°)╯ {crayons.red('◓')}︵","(╯°□°)╯ ︵{crayons.red('◓')}","(╯°□°)╯ {crayons.red('◓')}︵",f"(╯°□°)╯ {crayons.red('◓')}"]
@@ -237,7 +332,8 @@ def main():
                 rooms[player.currentRoom]["items"].remove(item)
         print('Inventory :',inventory)
         print('Locations :',rooms[player.currentRoom]["locations"])
-        print('Skills:',player.skills)
+        print('Badges :',player.badges)
+        print('Skills:',[skill for skill in player.skills if skill in rooms[player.currentRoom]["skills"]])
         print("You can go", ", ".join(rooms[player.currentRoom]['directions']))
         print('---------------------------')
         print('You are in',player.currentRoom)
@@ -304,7 +400,8 @@ def main():
                 clear()
             else:
                 print('You can\'t fly there!')
-        
+        elif move[0] in rooms[player.currentRoom]['skills']:
+            player.currentRoom = rooms[player.currentRoom]['skills'][move[0]]
         elif move[0] == 'get' :
     #if the room contains an item, and the item is the one they want to get
             if move[1].title() in rooms[player.currentRoom]["items"]:
