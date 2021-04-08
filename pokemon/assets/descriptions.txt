@@ -80,16 +80,16 @@ Route 6 : The Route connects Saffron City in the north to Vermilion City in the 
 Route 7 : The Route connects Saffron City to Caledon city. There is land and grass on both sides of this route. 
 Route 8 : The Route that connects Lavender Town in the East to Saffron City in the West. To the west, there is an entrance to the underground tunnels. In the middle, there is a small "Garden".
 Route 9 : The Route with Route 10 located to the east and Cerulean City to the west.
-Route 10 : The Route south of Route 9 and north of Lavender Town.
+Route 10 : North of Lavender Town, You hear the sonic rip of military jets, like a giant trowel being dragged through wet concrete, but can see only blue above, a raw and saturated blue that seemed cut from an inner wedge of sky.
 Route 11 : The Route that is east of Vermilion City and west of Route 12. It contains Diglett's Cave. 
-Route 12 : The Route lengthy north-south route in east Kanto. This route is also known as the Silence Bridge (サイレンズブリッジSilence Bridge) between its southern terminus at Route 13 and the lookout station just south of Lavender Town, its northern terminus.
+Route 12 : The Route lengthy north-south route in east Kanto. This route is also known as the Silence Bridge (サイレンズブリッジ) between its southern terminus at Route 13 and the lookout station just south of Lavender Town, its northern terminus.
 Route 13 : This is a route located in southeastern Kanto. There is a maze full of trainers here.
 Route 14 : This route is on the far Southeast side of the Kanto region.
 Route 15 : This route has a beautiful lake to the south of the route.
 Route 16 : The Route is a short route that is off of the bike route (Route 17) and west of Celadon City.
 Route 17 : The Route after Route 16 and before Fuchsia City. The Route after Fuchsia City and before Saffron City.
 Route 18 : The Route is a route located in central Kanto, and connects Route 17 and Fuchsia City.
-Route 19 : The Route before Seafoam Cave (also known as the water puddle). This route is a water route that is in the South of Kanto. This route connects Fuchsia City and Route 20.
+Route 19 : The Route before the Fuschia City (also known as the water puddle) you can hear the sounds from The Fushcia City Basin from here. The powerful clicks, like punches to the chest, of Wailmer hunting below, and nearing the Seafoam islands, granite spires rose sudden from the sea, white up top from bird guano and orange below from great gatherings of staryu.
 Route 20 : The route is an east-west route located in South-Southwest Kanto. The Seafoam Islands are located near the center of the route.
 Route 21 : After Saffron City and before Mt. Cinnabar / Cinnabar Volcano.It is a sea route which requires the move Surf to cross. It leads from Pallet Town to Cinnabar Island.
 Route 22 : is a route located within the Kanto region. When coming from Viridian City, the path goes around a wall of trees leading to a patch of grass. Heading north then west leads you to a ledge downwards to another patch of grass or you can alternatively surf through the pond to avoid it. Going north-west will lead to the Pokémon League Reception Gate while going south-east down the ledge will lead back to Viridian City.
@@ -99,10 +99,10 @@ Route 24 : is a route in north-eastern Kanto, with Route 25 to the north, and Ce
 Route 25 : Is connected to route 24 and leads to Bill's LightHouse.
 Route 26 : This Route continues east on a bridge over a body of water just before the player is about to go north. When there is land, there are patches of grass manning wild Pokémon.
 Route 26 : is a route that connects Kanto to Johto. To the east is Route 26.
-Route 27 : Leads to Mt. Silver.
-Rainbow Scale : At the bottom of the lake, you can see a glowing fish
+Route 27 : The Captain’s wife played the harp; she had very long arms, silver as eels on those nights, and armpits as dark and mysterious as sea urchins; and the sound of the harp was sweet and piercing, so sweet and piercing it was almost unbearable, and we were forced to let out long cries, not so much to accompany the music as to protect our hearing from it
+Rainbow Scale : At the bottom of the lake, you can see a glowing fish.
 Ho-oh Feather : In the middle of the clearing is a huge tree. One of your pokemon tell you theres something glowing at the top
-Dragon Fang : You almost trip on a surprisingly sharp rock. 
+Dragon Fang : You almost trip on a surprisingly sharp rock. It seems to be embedded into the earth, even your pokemon can't lift it  
 Dragon Scale : Your pokemon finds what looks like an emerald.
 Electirizer : A lightweight portable battery lays on the table next to a voltorb shrine.
 Helix Fossil : Your pokemon sees a strange sea shell. A fossil of an ancient Pokémon that lived in the sea. It appears to be part of a seashell. 
