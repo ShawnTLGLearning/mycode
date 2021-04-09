@@ -15,13 +15,13 @@ rooms = {
             'directions' : {"north": "Route 2","south": "Viridian City"},
             'items'  : [ "Ho-oh Feather" ],
             'locations': [],
-            'skills': []
+            'skills': {'climb': 'Viridian Forest'}
             },
         'Mt. Moon' : {
             'directions' : {"west": "Route 3","east": "Route 4"},
             'items'  : [ "Iceroot Carrot" ],
             'locations': [],
-            'skills': []
+            'skills': {'dig': 'Mt. Moon'}
             },
         'Rock Tunnel' : {
             'directions' : {"west": "Route 9","south": "Route 10"},
@@ -35,7 +35,7 @@ rooms = {
             'directions' : {"north": "Route 10","south": "Lavender Town"},
             'items'  : [ "Electirizer" ],
             'locations': [],
-            'skills': []
+            'skills': {'flash': 'Power Plant'}
             },
         'Radio Tower' : {
             'directions' : {"outside": "Lavender Town", "exit": "Lavender Town", "leave": "Lavender Town"},
@@ -67,7 +67,7 @@ rooms = {
             'directions' : {"south": "Route 11"},
             'items'  : [  "Dragon Fang"],
             'locations': [],
-            'skills': []
+            'skills': {'dig':"Diglet's Cave"}
             },
         "Diglet's Cave": {
             'directions' : {"north": "Route 3"},
@@ -77,7 +77,7 @@ rooms = {
             },
         'Mt. Silver' : {
             'directions' : {"east": "Route 28"},
-            'items'  : [ "Dragon Scale" ],
+            'items'  : [  ],
             'locations': [],
             'skills': []
             },

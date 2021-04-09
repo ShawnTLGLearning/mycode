@@ -8,7 +8,7 @@ from assets.rooms import rooms
 from assets.descriptions import descriptions
 import json
 #to start and stop music if we werent in virtual environment
-#import pygame.mixer
+import pygame.mixer
 from pokemon.master import catch_em_all, get_pokemon
 ##ascii art
 
@@ -42,6 +42,22 @@ class Player:
         self.badges = badges
         self.skills = skills
         self.pokemon = pokemon
+    def addItem(self,item):
+        print(f'You obtained item {item}')
+        self.inventory += [item]
+    def takeItem(self,item):
+        print(f'You lost the {item}')
+        self.inventory.remove(item)
+    def addSkill(self,newSkill):
+        print(f'You obtained skill {newSkill}')
+        self.skills += [newSkill]
+    def earnedBadge(self):
+        print(f'You obtained the {self.currentRoom}')
+        self.badges += [self.currentRoom]
+    def catchPokemon(self,poke):
+        print(f'You obtained the {poke.name}')
+        self.pokemon += [poke]
+    
 
 class Trainer(Player):
   def __init__(self, name, pokemon):
@@ -84,6 +100,12 @@ def validAction(action,player):
 
 def battle(player1, ai):
     """Battle Logic"""
+    #stop the music
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("assets/music/battle.mp3")
+
+    pygame.mixer.music.play()
+
     emoticons = [crayons.red("Θ"),f"(╯°□°)╯",f"(╯°□°)╯︵{crayons.red('◓')}",f"{crayons.yellow('ϞϞ')}({crayons.red('๑')}⚈ ․ ⚈{crayons.red('๑')})∩","><(((o.^.o)","ଘ @(￣▵—▵￣)v(￣▵▵￣)@ ଓ",">(8☉)@@@oo<>","(>￣ー￣)"]
     vid = [f"(╯°□°)╯  "+ emoticons[7],f"(╯°□°)╯︵"+emoticons[7],f"(╯°□°)╯︵{crayons.red('◓')}",f"(╯°□°)╯ ︵{crayons.red('◓')}",f"(╯°□°)╯ {crayons.red('◓')}︵",f"(╯°□°)╯ ︵{crayons.red('◓')}",f"(╯°□°)╯ {crayons.red('◓')}︵",f"(╯°□°)╯ {crayons.red('◓')}"] 
     clear()
@@ -99,6 +121,9 @@ def battle(player1, ai):
                 clear()
                 print("You won the battle!")
                 player1.pokemon[0] = Pokemon(currentPokemon.id,currentPokemon.level+1)
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load("assets/music/town.mp3")
+                pygame.mixer.music.play()
                 return player1
             elif currentPokemon.hp["current"]<=0:
                 print(player1.pokemon[0].name,"has fainted!")
@@ -109,6 +134,9 @@ def battle(player1, ai):
                     print("You fainted!")
                     print("You wake up in Pallet Town!")
                     player1.currentRoom = "Pallet Town"
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load("assets/music/town.mp3")
+                    pygame.mixer.music.play()
                     return player1
                 else:
                     choice = ''
@@ -137,11 +165,17 @@ def battle(player1, ai):
                 print(f"{wildPokemon.name} dealt {int(wildPokemon.attack)*wildPokemon.growth} points of damage to {currentPokemon.name}")
             elif action=="R" or action=="RUN":
                 clear()
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load("assets/music/town.mp3")
+                pygame.mixer.music.play()
                 return player1
             elif action=="C" or action=="CATCH":
                 video(vid)
                 if random.random() > 0.5:
                     print(f"You caught {wildPokemon.name}")
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load("assets/music/town.mp3")
+                    pygame.mixer.music.play()
                     return player1
                 else:
                     clear()
@@ -176,6 +210,9 @@ def battle(player1, ai):
                 print(f"You defeated {ai.name}!")
                 #levelup
                 player1.pokemon[0] = Pokemon(currentPokemon.id,currentPokemon.level+1)
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load("assets/music/town.mp3")
+                pygame.mixer.music.play()
                 return player1
             else:
                 wildPokemon = ai.pokemon[0]
@@ -190,6 +227,9 @@ def battle(player1, ai):
                     print("You fainted!")
                     print("You wake up in Pallet Town!")
                     player1.currentRoom = "Pallet Town"
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load("assets/music/town.mp3")
+                    pygame.mixer.music.play()
                     return player1
                 else:
                     choice = ''
@@ -251,11 +291,11 @@ def gymBattle(player):
             "Saffron City": Trainer("Sabrina",[Pokemon(122,60),Pokemon(124,56),Pokemon(97,51),Pokemon(80,56),Pokemon(103,60),Pokemon(65,70)]),
             "Vermillion City": Trainer("Lt. Surge",[Pokemon(101,60),Pokemon(135,56),Pokemon(125,51),Pokemon(82,56),Pokemon(127,70),Pokemon(26,65)]),
             "Celadon City": Trainer("Erika",[Pokemon(114,60),Pokemon(47,56),Pokemon(103,51),Pokemon(71,56),Pokemon(3,70),Pokemon(45,65)]),
-            "Lavender City": Trainer("Gary",[Pokemon(18,60),Pokemon(65,65),Pokemon(112,60),Pokemon(130,64),Pokemon(103,70),Pokemon(59,65)]),
+            "Lavender Town": Trainer("Gary",[Pokemon(18,60),Pokemon(65,65),Pokemon(112,60),Pokemon(130,64),Pokemon(103,70),Pokemon(59,65)]),
             "Fuschia City": Trainer("Janine",[Pokemon(49,60),Pokemon(89,56),Pokemon(110,51),Pokemon(42,56),Pokemon(33,70),Pokemon(73,65)]),
             "Viridian City": Trainer("Giovanni",[Pokemon(111,45),Pokemon(51,42),Pokemon(31,44),Pokemon(34,45),Pokemon(111,50),Pokemon(150,150)]),
             "Indigo Plateau":[ Trainer("",[Pokemon(1,1)]),Trainer("",[Pokemon(1,1)])],
-            "Atlantis City": Trainer("Aquaman",[Pokemon(9,60),Pokemon(9,60),Pokemon(9,60),Pokemon(9,60),Pokemon(9,60),Pokemon(9,60)]),
+            "Santa's House": Trainer("Santa",[Pokemon(9,100),Pokemon(144,100)]),
             }
     
     player = battle(player,gyms[player.currentRoom])
@@ -278,6 +318,16 @@ def gymBattle(player):
 def articunoBattle(player):
     """returns player after running Legendary Battle"""
     player = battle(player,Trainer("Legendary",[Pokemon(144,65)]))
+    return player
+
+def zapdosBattle(player):
+    """returns player after running Legendary Battle"""
+    player = battle(player,Trainer("Legendary",[Pokemon(145,65)]))
+    return player
+
+def moltresBattle(player):
+    """returns player after running Legendary Battle"""
+    player = battle(player,Trainer("Legendary",[Pokemon(146,65)]))
     return player
 
 def mewTwoBattle(player):
@@ -310,16 +360,35 @@ Commands:
   [skill]
   q (quit)
 ''')
+##Starting intro music and 
+def intro():
+
+    pygame.mixer.init()
+    pygame.mixer.music.load("assets/music/intro.mp3")
+    pygame.mixer.music.play()
+
+    starter= [Pokemon(25,5),Pokemon(1,5),Pokemon(4,5),Pokemon(7,5)]
+    chosen = ''
+    while chosen not in [pokemon.name for pokemon in starter]:
+        chosen = input(f"Professor Oak: What Pokemon would you like? {[pokemon.name for pokemon in starter]}\n<{crayons.red('◓')}>").title()
+    ##Super God Pikachu!!
+    player = Player("Pallet Town", [],[],["climb","fly","dig","surf","cut","strength","hidden power","flash"],[Pokemon(25,1000)]) 
+    # Actual Starter Player = Player("Pallet Town", [],[],[],[])
+    player.catchPokemon([pokemon for pokemon in starter if pokemon.name == chosen][0])
+    pygame.mixer.music.stop()
+    return player
 
 def main():
     clear()
     print("██████╗  ██████╗ ██╗  ██╗███████╗███╗   ███╗ ██████╗ ███╗   ██╗\n██╔══██╗██╔═══██╗██║ ██╔╝██╔════╝████╗ ████║██╔═══██╗████╗  ██║\n██████╔╝██║   ██║█████╔╝ █████╗  ██╔████╔██║██║   ██║██╔██╗ ██║\n██╔═══╝ ██║   ██║██╔═██╗ ██╔══╝  ██║╚██╔╝██║██║   ██║██║╚██╗██║\n██║     ╚██████╔╝██║  ██╗███████╗██║ ╚═╝ ██║╚██████╔╝██║ ╚████║\n╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝\n")
     validCommands = ["get","go","use", "fly","cut","climb", "surf", "hidden power", "flash","dig"]
-    player = Player("Pallet Town", [],[],["fly","dig","surf","cut","strength","hidden power","flash"],[Pokemon(25,65),Pokemon(8,60), Pokemon(6,65),Pokemon(10,2000)])
+   
+    player = intro()
     move= ""
     
+    pygame.mixer.music.load("assets/music/town.mp3")
+    pygame.mixer.music.play()
     storage = []
-    inventory=[]
     emoticons = [crayons.red("Θ"),f"(╯°□°)╯",f"(╯°□°)╯︵{crayons.red('◓')}",f"{crayons.yellow('ϞϞ')}({crayons.red('๑')}⚈ ․ ⚈{crayons.red('๑')})∩","><(((o.^.o)","ଘ @(￣▵—▵￣)v(￣▵▵￣)@ ଓ",">(8☉)@@@oo<>","(>￣ー￣)"]
     vid = [f"(╯°□°)╯  "+ emoticons[7],f"(╯°□°)╯︵"+emoticons[7],f"(╯°□°)╯︵{crayons.red('◓')}","(╯°□°)╯ ︵{crayons.red('◓')}","(╯°□°)╯ {crayons.red('◓')}︵","(╯°□°)╯ ︵{crayons.red('◓')}","(╯°□°)╯ {crayons.red('◓')}︵",f"(╯°□°)╯ {crayons.red('◓')}"]
     #Didnt have time to finish saves
@@ -327,10 +396,10 @@ def main():
     def showStatus():
   #print the player's current status
   #remove items from map that are in inventory
-        for item in inventory:
+        for item in player.inventory:
             if item in rooms[player.currentRoom]["items"]:
                 rooms[player.currentRoom]["items"].remove(item)
-        print('Inventory :',inventory)
+        print('Inventory :',player.inventory)
         print('Locations :',rooms[player.currentRoom]["locations"])
         print('Badges :',player.badges)
         print('Skills:',[skill for skill in player.skills if skill in rooms[player.currentRoom]["skills"]])
@@ -350,11 +419,6 @@ def main():
     #showInstructions()
     
     #plays music but server doesnt have speakers
-    #pygame.mixer.init()
-    #pygame.mixer.music.load("assets/music/battle.mp3")
-    #pygame.mixer.music.play()
-    #while pygame.mixer.music.get_busy() == True:
-    #    continue
 
 
     while True and move !="q":
@@ -368,8 +432,14 @@ def main():
         if player.currentRoom[0]=="R":
             player = grass(player)
         
-        if player.currentRoom=="Mt. Silver" and "Kings Rock" in inventory:
+        if player.currentRoom=="Mt. Silver" and "Iceroot Carrot" in player.inventory:
             player = articunoBattle(player)
+        
+        if player.currentRoom=="Power Plant" and "Electirizer" in player.inventory:
+            player = zapdosBattle(player)
+        
+        if player.currentRoom=="Cinnibar Island" and "Ho-oh Feather" in player.inventory:
+            player = moltresBattle(player)
         
         showStatus()
         move= ""
@@ -401,13 +471,27 @@ def main():
             else:
                 print('You can\'t fly there!')
         elif move[0] in rooms[player.currentRoom]['skills']:
+            clear()
+            if player.currentRoom == "Power Plant":
+                player.addItem('Electirizer')
+                print('You Hear a Huge Explosion as a Bird Falls Through the Ceiling')
+                rooms[player.currentRoom]
+            if player.currentRoom == "Viridian Forest":
+                print('You swiftly Climb the tree and find at the top there is a shining feather')
+                player.addItem('Ho-oh Feather')
+                rooms[player.currentRoom]['items'].remove('Ho-oh Feather')
+            if player.currentRoom == "Mt. Moon":
+                print('You dug deep into the dirt and got some delicious Iceroot Carrot')
+                player.addItem('Iceroot Carrot')
+                rooms[player.currentRoom]['items'].remove('Iceroot Carrot')
+
             player.currentRoom = rooms[player.currentRoom]['skills'][move[0]]
         elif move[0] == 'get' :
     #if the room contains an item, and the item is the one they want to get
             if move[1].title() in rooms[player.currentRoom]["items"]:
-      #add the item to their inventory
+      #add the item to their player.inventory
                 move[1] = move[1].title()
-                inventory += [move[1]]
+                player.inventory += [move[1]]
       #display a helpful message
                 clear()
                 print(f"You put {move[1]} in your inventory")
